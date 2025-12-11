@@ -1,11 +1,11 @@
 import React from 'react';
 class ClassComponent extends React.Component {
-    render() {  
+    render() {
         return (
             <div>
-                <h1>This is a class component</h1>
+                <h1>This is a Class Component</h1>
             </div>
         );
     }
 }
-export default ClassComponent;
+export default ClassComponent; 
