@@ -1,4 +1,6 @@
+import LearningReact from "./LearningReact.jsx";
 import Props from "./Props.jsx";
+import { Link } from "react-router-dom";
 
 function Navbar(props) {
   return (
@@ -6,20 +8,15 @@ function Navbar(props) {
       <nav>
         <h3>My Navbar</h3>
         <ul>
-          <li>Home</li>
-          <li>About</li>
-          <li>Contact</li>
-          <ol>
-            <li>
-              <Props grade="12" age="17" player="Haaland" />
-            </li>
-          </ol>
-          <li>ReactLearn</li>
+          <li><Link to="/">Home</Link></li>
+          <li><Link to="/about">About</Link></li>
+          <li><Link to="/contact">Contact</Link></li>
         </ul>
       </nav>
       <p>The above content is Navbar</p>
+      <LearningReact />
+      
     </header>
   );
 }
-
 export default Navbar;

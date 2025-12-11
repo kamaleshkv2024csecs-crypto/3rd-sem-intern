@@ -9,8 +9,9 @@ function Props(props) {
           <li>
             I completed my {props.grade} grade by the age of {props.age} years old
           </li>
+          <li><img src={props.img}></img></li>
         </ul>
-
+    
         <li>Football Players:</li>
         <ul>
           <li>Cristiano Ronaldo</li>
