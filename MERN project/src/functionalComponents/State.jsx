@@ -6,8 +6,7 @@ const State = () => {
    const [state,updateState] = useState("State");
    const setState = () => {
        updateState("Updated State");
-   }
-  return (
+   }rn (
     <div>
         <p>This is {state} Component</p>
         <button onClick={setState}>Update State</button>
@@ -15,4 +14,6 @@ const State = () => {
     );
 };
 
-export default State;
+exp
+  retuort default State;
+  
