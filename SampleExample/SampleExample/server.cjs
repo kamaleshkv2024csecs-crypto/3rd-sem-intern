@@ -4,9 +4,23 @@ const db = require('./bd.cjs');
 
 const app = express();
 
-async function start() {
-    try {
-    await db.connectDB();
+// Handle unhandled rejections
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('Unhandled Rejection at:', promise, 'reason:', reason);
+});
+
+function start() {
+  try {
+    // Don't wait for DB connection - start server immediately
+    console.log('Starting database connection...');
+    // Fire and forget DB connection - don't await
+    db.connectDB().then(() => {
+      console.log('DB connection completed');
+    }).catch(err => {
+      console.error('DB connection error:', err);
+    });
+    
+    console.log('Setting up express middleware...');
     app.use(express.static(path.join(__dirname, 'dist')));
 
     app.use(express.json());
@@ -22,7 +36,7 @@ async function start() {
         return res.status(400).json({ error: 'email, username and password are required' });
       }
 
-      const database = db.getDb();
+      const database = db.getDb('sampledb');
       if (!database) {
         return res.status(503).json({ error: 'Database unavailable — signup not persisted' });
       }
@@ -43,9 +57,35 @@ async function start() {
     });
 
     const PORT = process.env.PORT || 3000;
-    app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+    console.log(`Attempting to start server on port ${PORT}...`);
+    const server = app.listen(PORT, () => {
+      console.log(`✅ Server is listening on port ${PORT}`);
+    });
+    server.on('error', (err) => {
+      console.error('Server error:', err);
+      process.exit(1);
+    });
+    
+    // Keep process alive
+    process.on('SIGTERM', () => {
+      console.log('SIGTERM received, shutting down gracefully');
+      server.close(() => process.exit(0));
+    });
+    
+    // Explicitly prevent process from exiting
+    process.on('uncaughtException', (err) => {
+      console.error('Uncaught exception:', err);
+      process.exit(1);
+    });
+    
+    process.on('exit', (code) => {
+      console.log(`Process is exiting with code ${code}`);
+    });
+    
+    console.log('Server initialization complete. Press Ctrl+C to stop.');
   } catch (err) {
     console.error('Failed to start server', err);
+    console.error(err.stack);
     process.exit(1);
   }
 }

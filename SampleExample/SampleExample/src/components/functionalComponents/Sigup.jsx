@@ -6,7 +6,7 @@ const Sigup = ({ onNavigate = () => {} }) => {
     const [password, setPassword] = useState('');
     const [msg, setMsg] = useState('');
 
-    const BASE = 'https://threerd-sem-intern-1.onrender.com';
+    const BASE = 'https://threerd-sem-internship-5.onrender.com/';
 
     const handleSubmit = async (e) => {
         e.preventDefault();

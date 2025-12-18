@@ -34,6 +34,14 @@ async function connectDB(options = { retries: 1, retryDelayMs: 2000 }) {
             console.error(`❌ Mongo connect attempt ${attempt} failed:`, error.message || error);
             if (attempt > retries) {
                 console.error('❌ All MongoDB connect attempts failed. Continuing without DB.');
+                // Close the client to prevent hanging connections
+                try {
+                    if (client) {
+                        await client.close();
+                    }
+                } catch (e) {
+                    // Ignore close errors
+                }
                 return;
             }
             // wait before retrying
