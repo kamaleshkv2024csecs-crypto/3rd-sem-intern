@@ -14,12 +14,12 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
+        <Route path="/about" e lement={<About />} />
+        <Route path="/contact" element={<Contact />} /a>
         <Route path="/login" element={<Login />} />
         <Route path="/usecallback" element={<UseCallback />} />
       </Routes>
-      
+     
     </BrowserRouter>
   )
 }
